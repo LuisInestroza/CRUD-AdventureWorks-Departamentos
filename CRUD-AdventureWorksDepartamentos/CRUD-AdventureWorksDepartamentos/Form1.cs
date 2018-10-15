@@ -39,8 +39,15 @@ namespace CRUD_AdventureWorksDepartamentos
                 // Establecer la conexion 
                 conn.Open();
 
-                // Ejecutar el comando
-                cmd.ExecuteNonQuery();
+                // Ejecutar el query
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                while(rdr.Read())
+                {
+                    lbReader.Items.Add(rdr[0]);
+                }
+            
+                
 
             }
             catch (SqlException ex)
@@ -68,17 +75,23 @@ namespace CRUD_AdventureWorksDepartamentos
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-                // Parametros del store procedure
-                cmd.Parameters.Add(new SqlParameter("@departmentId", SqlDbType.SmallInt, 3));
-                cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.NVarChar));
-                cmd.Parameters.Add(new SqlParameter("@group", SqlDbType.NVarChar));
-                cmd.Parameters.Add(new SqlParameter("@date", SqlDbType.DateTime));
-
                 // Establecer la conexion
                 conn.Open();
 
+                // Parametros del store procedure
+                cmd.Parameters.Add(new SqlParameter("@departmentId", SqlDbType.SmallInt, 3)).Value = txtCodigoDepto.Text;
+                cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.NVarChar)).Value = txtNombreDepto.Text;
+                cmd.Parameters.Add(new SqlParameter("@group", SqlDbType.NVarChar)).Value = txtGrupoDepto.Text;
+                cmd.Parameters.Add(new SqlParameter("@date", SqlDbType.DateTime)).Value = dtpFecha.Value;
+
                 // Ejecutar el comando
                 cmd.ExecuteNonQuery();
+
+                // Mostrar el mensaje del Query
+                lbEstadoCRUD.Text = "Nuevo departamento agregado";
+
+      
+                
             }
             catch (SqlException ex)
             {
@@ -102,17 +115,24 @@ namespace CRUD_AdventureWorksDepartamentos
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-                // Parametros del store procedure
-                cmd.Parameters.Add(new SqlParameter("@departmentId", SqlDbType.SmallInt, 3));
-                cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.NVarChar));
-                cmd.Parameters.Add(new SqlParameter("@group", SqlDbType.NVarChar));
-                cmd.Parameters.Add(new SqlParameter("@date", SqlDbType.DateTime));
 
                 // Establecer la conexion
                 conn.Open();
 
+                // Parametros del store procedure
+                cmd.Parameters.Add(new SqlParameter("@departmentId", SqlDbType.SmallInt, 3)).Value = txtCodigoDepto.Text;
+                cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.NVarChar)).Value = txtNombreDepto.Text;
+                cmd.Parameters.Add(new SqlParameter("@group", SqlDbType.NVarChar)).Value = txtGrupoDepto.Text;
+                cmd.Parameters.Add(new SqlParameter("@date", SqlDbType.DateTime)).Value = dtpFecha.Value;
+     
                 // Ejecutar el comando
                 cmd.ExecuteNonQuery();
+
+
+                // Mostrar el mensaje del Query
+                lbEstadoCRUD.Text = "Departamento actualizado";
+
+                
             }
 
             catch (SqlException ex)
@@ -137,14 +157,20 @@ namespace CRUD_AdventureWorksDepartamentos
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-                // Parametros del store procedure
-                cmd.Parameters.Add(new SqlParameter("@departmentId", SqlDbType.SmallInt, 3));
 
                 // Establecer la conexion
                 conn.Open();
 
+                // Parametros del store procedure
+                cmd.Parameters.Add(new SqlParameter("@departmentId", SqlDbType.SmallInt, 3)).Value = txtCodigoDepto.Text;
+
                 // Ejecutar el comando
                 cmd.ExecuteNonQuery();
+
+                // Mostrar el mensaje del Query
+                lbEstadoCRUD.Text = "Departamento Eliminado";
+
+                
             }
 
             catch (SqlException ex)
@@ -157,5 +183,7 @@ namespace CRUD_AdventureWorksDepartamentos
                 conn.Close();
             }
         }
+
+        
     }
 }
